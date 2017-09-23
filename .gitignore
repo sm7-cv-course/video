@@ -1,0 +1,10 @@
+.project
+.cproject
+.settings
+bin
+build
+doc/documentation
+__pycache__
+*.pyc
+*.dat
+*.pkl
