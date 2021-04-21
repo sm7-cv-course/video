@@ -9,7 +9,8 @@ from matplotlib import pyplot as plt
 ap = argparse.ArgumentParser()
 ap.add_argument("-s", "--video", required=True, help="Path to source video.")
 ap.add_argument("-o", "--out", required=False, help="Output folder path.")
-ap.add_argument("-a", "--all", required=False, help="Save all channnels: r,g,b,h,s,v.")
+ap.add_argument("-a", "--all", required=False, help="Save all channnels: i,r,g,b,h,s,v.")
+ap.add_argument("-i", "--gray", required=False, help="Save gray channnel(intensity).", action='store_true')
 ap.add_argument("-r", "--red", required=False, help="Save red channnel.", action='store_true')
 ap.add_argument("-g", "--green", required=False, help="Save green channnel.", action='store_true')
 ap.add_argument("-b", "--blue", required=False, help="Save blue channnel.", action='store_true')
@@ -57,6 +58,9 @@ if args["sat"]:
 if args["val"]:
     os.makedirs(out_dir + "/val", mode=0o777, exist_ok=True)
 
+if args["gray"]:
+    os.makedirs(out_dir + "/gray", mode=0o777, exist_ok=True)
+
 # while(cap.isOpened()):
 i=0
 while(True):
@@ -73,7 +77,9 @@ while(True):
         frame = frame[y : y + h, x : x + w, :]
 
     # Our operations on the frame come here
-    # gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    if args["gray"]:
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        cv2.imwrite(out_dir + '/gray/' + 'gray_' + "{}".format(i) + '.png', gray)
 
     if args["sat"] or args["hue"] or args["val"]:
         frag_hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
