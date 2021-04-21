@@ -5,6 +5,8 @@ bin
 build
 doc/documentation
 __pycache__
+Makefile
 *.pyc
 *.dat
 *.pkl
+*.png
