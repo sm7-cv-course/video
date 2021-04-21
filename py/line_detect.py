@@ -3,7 +3,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib import image as image
 
-video_path = './../data/Видео0010.3gp'
+video_path = r'./../data/Видео0010.3gp'
 
 cap = cv2.VideoCapture(video_path)
 
