@@ -27,8 +27,8 @@ args = vars(ap.parse_args())
 
 cap = cv2.VideoCapture(args["video"])
 
-if args["cut"] is not None:
-    if (args["width"] and args["height"] and args["X"] and args["Y"]) is False:
+if args["cut"]:
+    if (args["width"] and args["height"] and args["X"] and args["Y"]) is None:
         print("You must specify width, height, x and y for cut!")
     else:
         x = int(args["X"])
@@ -73,7 +73,7 @@ while(True):
         #frame = ndimage.rotate(frame, -float(args["rotate"]))
         frame = imutils.rotate(frame, angle=-float(args["rotate"]))
 
-    if args["cut"] is not None:
+    if args["cut"]:
         frame = frame[y : y + h, x : x + w, :]
 
     # Our operations on the frame come here
