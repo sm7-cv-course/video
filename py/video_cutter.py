@@ -10,6 +10,7 @@ ap = argparse.ArgumentParser()
 ap.add_argument("-s", "--video", required=True, help="Path to source video.")
 ap.add_argument("-o", "--out", required=False, help="Output folder path.")
 ap.add_argument("-a", "--all", required=False, help="Save all channnels: i,r,g,b,h,s,v.")
+ap.add_argument("-w", "--rgb", required=False, help="Save cut of original image(RGB).", action='store_true')
 ap.add_argument("-i", "--gray", required=False, help="Save gray channnel(intensity).", action='store_true')
 ap.add_argument("-r", "--red", required=False, help="Save red channnel.", action='store_true')
 ap.add_argument("-g", "--green", required=False, help="Save green channnel.", action='store_true')
@@ -39,6 +40,9 @@ if args["cut"]:
 out_dir = "."
 if args["out"] is not None:
     out_dir = args["out"]
+
+if args["rgb"]:
+    os.makedirs(out_dir + "/rgb", mode=0o777, exist_ok=True)
 
 if args["red"]:
     os.makedirs(out_dir + "/red", mode=0o777, exist_ok=True)
@@ -83,6 +87,9 @@ while(True):
 
     if args["sat"] or args["hue"] or args["val"]:
         frag_hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+
+    if args["rgb"]:
+        cv2.imwrite(out_dir + '/rgb/' + "{}".format(i) + '.png', frame)
 
     if args["red"]:
         cv2.imwrite(out_dir + '/red/' + 'red_' + "{}".format(i) + '.png', frame[:, :, 0])
